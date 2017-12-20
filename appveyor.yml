@@ -16,10 +16,20 @@ environment:
       VISUAL_STUDIO_VERSION: 14.1
 
 build_script:
-  - cd miniupnpc
-  - mingw32-make -f Makefile.mingw
-  - mkdir miniupnpc_build
-  - cd miniupnpc_build
-  - ps: cmake -G "$($env:CMAKE_GENERATOR)$($env:CMAKE_GENERATOR_SUFFIX)" -DCMAKE_BUILD_TYPE="$($env:CONFIGURATION)" ..
-  - ps: cmake --build . --config "$($env:CONFIGURATION)"  -- /m /v:normal
-# - upnpc-static.exe -l
+  - ps: |
+      mkdir build
+      cd build
+      If ($env:Platform -Match "x86") {
+        # TODO
+      } Else {
+        $env:CMAKE_GENERATOR_SUFFIX=" Win64"
+      }
+      cd miniupnpc
+      mingw32-make -f Makefile.mingw
+      mkdir miniupnpc_build
+      cd miniupnpc_build
+      cmake -G "$($env:CMAKE_GENERATOR)$($env:CMAKE_GENERATOR_SUFFIX)" -DCMAKE_BUILD_TYPE="$($env:CONFIGURATION)" -DIPHLPAPI_LIBRARY="" -DWINSOCK2_LIBRARY="" ..
+      cmake --build . --config "$($env:CONFIGURATION)"  -- /m /v:normal
+
+test_script:
+  - upnpc-static.exe -l
