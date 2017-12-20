@@ -22,4 +22,4 @@ build_script:
   - cd miniupnpc_build
   - ps: cmake -G "$($env:CMAKE_GENERATOR)$($env:CMAKE_GENERATOR_SUFFIX)" -DCMAKE_BUILD_TYPE="$($env:CONFIGURATION)" ..
   - ps: cmake --build . --config "$($env:CONFIGURATION)"  -- /m /v:normal
-  - upnpc-static.exe -l
+# - upnpc-static.exe -l
