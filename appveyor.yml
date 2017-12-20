@@ -8,12 +8,16 @@ configuration:
   - Debug
   - Release
 
+os: Visual Studio 2015
+
 environment:
-    matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-      CMAKE_GENERATOR: Visual Studio 14 2015
-      VISUAL_STUDIO_INTERNAL_VERSION: 141
-      VISUAL_STUDIO_VERSION: 14.1
+  matrix:
+    - generator: "Visual Studio 15 2017"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - generator: "Visual Studio 15 2017 Win64"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - generator: "Visual Studio 14 2015"
+    - generator: "Visual Studio 14 2015 Win64"
 
 build_script:
   - ps: |
@@ -21,13 +25,8 @@ build_script:
       mingw32-make -f Makefile.mingw
       mkdir miniupnpc_build
       cd miniupnpc_build
-      If ($env:Platform -Match "x86") {
-        # TODO
-      } Else {
-        $env:CMAKE_GENERATOR_SUFFIX=" Win64"
-      }
-      cmake -G "$($env:CMAKE_GENERATOR)$($env:CMAKE_GENERATOR_SUFFIX)" -DCMAKE_BUILD_TYPE="$($env:CONFIGURATION)" -DIPHLPAPI_LIBRARY="" -DWINSOCK2_LIBRARY="" ..
+      cmake -G "$($env:generator)" -DCMAKE_BUILD_TYPE="$($env:CONFIGURATION)" -DIPHLPAPI_LIBRARY="" -DWINSOCK2_LIBRARY="" ..
       cmake --build . --config "$($env:CONFIGURATION)"  -- /m /v:normal
 
 test_script:
-  - upnpc-static.exe -l
+  - miniupnpc\miniupnpc_build\upnpc-static.exe -l
