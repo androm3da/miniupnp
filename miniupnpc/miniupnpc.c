@@ -92,7 +92,7 @@ static int is_rfc1918addr(const char * addr)
 }
 
 /* root description parsing */
-MINIUPNP_LIBSPEC void parserootdesc(const char * buffer, int bufsize, struct IGDdatas * data)
+ void parserootdesc(const char * buffer, int bufsize, struct IGDdatas * data)
 {
 	struct xmlparser parser;
 	/* xmlparser object */
@@ -279,7 +279,7 @@ char * simpleUPnPcommand(int s, const char * url, const char * service,
  * UDA v1.1 says :
  *   The TTL for the IP packet SHOULD default to 2 and
  *   SHOULD be configurable. */
-MINIUPNP_LIBSPEC struct UPNPDev *
+ struct UPNPDev *
 upnpDiscoverDevices(const char * const deviceTypes[],
                     int delay, const char * multicastif,
                     const char * minissdpdsock, int localport,
@@ -351,7 +351,7 @@ upnpDiscoverDevices(const char * const deviceTypes[],
 }
 
 /* upnpDiscover() Discover IGD device */
-MINIUPNP_LIBSPEC struct UPNPDev *
+ struct UPNPDev *
 upnpDiscover(int delay, const char * multicastif,
              const char * minissdpdsock, int localport,
              int ipv6, unsigned char ttl,
@@ -375,7 +375,7 @@ upnpDiscover(int delay, const char * multicastif,
 }
 
 /* upnpDiscoverAll() Discover all UPnP devices */
-MINIUPNP_LIBSPEC struct UPNPDev *
+ struct UPNPDev *
 upnpDiscoverAll(int delay, const char * multicastif,
                 const char * minissdpdsock, int localport,
                 int ipv6, unsigned char ttl,
@@ -392,7 +392,7 @@ upnpDiscoverAll(int delay, const char * multicastif,
 }
 
 /* upnpDiscoverDevice() Discover a specific device */
-MINIUPNP_LIBSPEC struct UPNPDev *
+ struct UPNPDev *
 upnpDiscoverDevice(const char * device, int delay, const char * multicastif,
                 const char * minissdpdsock, int localport,
                 int ipv6, unsigned char ttl,
@@ -481,7 +481,7 @@ build_absolute_url(const char * baseurl, const char * descURL,
 
 /* Prepare the Urls for usage...
  */
-MINIUPNP_LIBSPEC void
+ void
 GetUPNPUrls(struct UPNPUrls * urls, struct IGDdatas * data,
             const char * descURL, unsigned int scope_id)
 {
@@ -506,7 +506,7 @@ GetUPNPUrls(struct UPNPUrls * urls, struct IGDdatas * data,
 #endif
 }
 
-MINIUPNP_LIBSPEC void
+ void
 FreeUPNPUrls(struct UPNPUrls * urls)
 {
 	if(!urls)
@@ -553,7 +553,7 @@ UPNPIGD_IsConnected(struct UPNPUrls * urls, struct IGDdatas * data)
  * passed as parameters are set. Dont forget to call FreeUPNPUrls(urls) to
  * free allocated memory.
  */
-MINIUPNP_LIBSPEC int
+ int
 UPNP_GetValidIGD(struct UPNPDev * devlist,
                  struct UPNPUrls * urls,
 				 struct IGDdatas * data,
