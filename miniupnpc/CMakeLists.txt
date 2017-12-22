@@ -108,7 +108,9 @@ endif (NOT UPNPC_BUILD_STATIC AND NOT UPNPC_BUILD_SHARED)
 
 if (UPNPC_BUILD_STATIC)
   add_library (libminiupnpc-static STATIC ${MINIUPNPC_SOURCES})
-  set_target_properties (libminiupnpc-static PROPERTIES OUTPUT_NAME "miniupnpc")
+  if (NOT WIN32)
+      set_target_properties (libminiupnpc-static PROPERTIES OUTPUT_NAME "miniupnpc")
+  endif()
   set_source_files_properties (${MINIUPNPC_SOURCES} PROPERTIES
                                                     COMPILE_DEFINITIONS "MINIUPNP_STATICLIB"
   )
@@ -125,7 +127,7 @@ if (UPNPC_BUILD_SHARED)
   set_target_properties (libminiupnpc-shared PROPERTIES VERSION ${MINIUPNPC_VERSION})
   set_target_properties (libminiupnpc-shared PROPERTIES SOVERSION ${MINIUPNPC_API_VERSION})
   set_source_files_properties (${MINIUPNPC_SOURCES} PROPERTIES
-                                                    COMPILE_DEFINITIONS "MINIUPNP_STATICLIB"
+                                                    COMPILE_DEFINITIONS "MINIUPNP_EXPORTS"
   )
   target_link_libraries (libminiupnpc-shared ${LDLIBS})
   set (UPNPC_INSTALL_TARGETS ${UPNPC_INSTALL_TARGETS} libminiupnpc-shared)
