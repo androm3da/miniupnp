@@ -93,7 +93,7 @@ endif (NOT WIN32 AND NOT CMAKE_SYSTEM_NAME STREQUAL "AmigaOS")
 if (WIN32)
   find_library (WINSOCK2_LIBRARY NAMES ws2_32 WS2_32 Ws2_32)
   find_library (IPHLPAPI_LIBRARY NAMES iphlpapi)
-  set(CXX_STANDARD_LIBRARIES "${CXX_STANDARD_LIBRARIES} ws2_32.lib iphlpapi.lib")
+  set (LDLIBS "ws2_32.lib iphlpapi.lib")
 #elseif (CMAKE_SYSTEM_NAME STREQUAL "Solaris")
 #  find_library (SOCKET_LIBRARY NAMES socket)
 #  find_library (NSL_LIBRARY NAMES nsl)
@@ -124,7 +124,7 @@ if (UPNPC_BUILD_SHARED)
   set_target_properties (libminiupnpc-shared PROPERTIES VERSION ${MINIUPNPC_VERSION})
   set_target_properties (libminiupnpc-shared PROPERTIES SOVERSION ${MINIUPNPC_API_VERSION})
   set_source_files_properties (${MINIUPNPC_SOURCES} PROPERTIES
-                                                    COMPILE_DEFINITIONS "MINIUPNP_EXPORTS"
+                                                    COMPILE_DEFINITIONS "MINIUPNP_STATICLIB"
   )
   target_link_libraries (libminiupnpc-shared ${LDLIBS})
   set (UPNPC_INSTALL_TARGETS ${UPNPC_INSTALL_TARGETS} libminiupnpc-shared)
