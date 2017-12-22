@@ -22,7 +22,7 @@ environment:
 build_script:
   - ps: |
       cd miniupnpc
-#     mingw32-make -f Makefile.mingw
+      echo mingw32-make -f Makefile.mingw
       mkdir miniupnpc_build
       cd miniupnpc_build
       cmake -G "$($env:generator)" -DCMAKE_BUILD_TYPE="$($env:CONFIGURATION)" -DUPNPC_BUILD_SHARED=OFF -DIPHLPAPI_LIBRARY="" -DWINSOCK2_LIBRARY="" ..
